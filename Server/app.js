@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 
 const codeblockRoutes = require("./api/routes/codeblocks");
 const userRoutes = require("./api/routes/users");
+const sessionRoutes = require("./api/routes/sessions");
 
 // DB Connection
 mongoose
@@ -45,6 +46,7 @@ app.use((req, res, next) => {
 // Routes
 app.use("/codeblocks", codeblockRoutes);
 app.use("/user", userRoutes);
+app.use("/session", sessionRoutes);
 
 app.use((req, res, next) => {
   const error = new Error("Not Found");

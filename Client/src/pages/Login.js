@@ -21,19 +21,17 @@ export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const dispatch = useDispatch();
   let navigate = useNavigate();
 
   const getUserRole = async (userEmail) => {
     const { data } = await axios.get(BASE_URL + "role/" + userEmail);
-    if (data.users[0].role === "mentor") dispatch(changeToMentor());
-    else dispatch(changeToStudent());
+    if (data.users[0].role === "mentor") {
+      localStorage.setItem("role", "mentor");
+    } else {
+      localStorage.setItem("role", "student");
+    }
   };
-  //Sending 2 requests : 1) username and password validation
-  // 2) dispacth the user role in store in order to check authrazation later
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    getUserRole(email);
+  const loginUser = async (userEmail) => {
     axios
       .post(BASE_URL + "login", {
         email: email,
@@ -44,6 +42,14 @@ export function Login() {
           navigate("/codeBlock");
         }
       });
+  };
+
+  //Sending 2 requests : 1) username and password validation
+  // 2) dispacth the user role in store in order to check authrazation later
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    getUserRole(email);
+    loginUser();
   };
 
   return (
@@ -67,7 +73,11 @@ export function Login() {
             <FormLabel></FormLabel>
             <FormControl onChange={(e) => setPassword(e.target.value)}>
               <InputLabel htmlFor="my-input">Password</InputLabel>
-              <Input id="my-input" aria-describedby="my-helper-text" />
+              <Input
+                type="password"
+                id="my-input"
+                aria-describedby="my-helper-text"
+              />
               <FormHelperText id="my-helper-text"></FormHelperText>
             </FormControl>
           </FormGroup>

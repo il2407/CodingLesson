@@ -1,31 +1,38 @@
 import React, { useEffect, useState } from "react";
-import ScrollToBottom from "react-scroll-to-bottom";
 import CodeEditor from "@uiw/react-textarea-code-editor";
 import { useStore } from "react-redux";
 
-function Chat({ socket }) {
+function Chat({ socket, room }) {
   const [currentMessage, setCurrentMessage] = useState("abc");
   const [isMentor, setIsMentor] = useState(false);
 
   const store = useStore();
   let auth = { token: true };
   const reductStore = store.getState().role;
+  const role = localStorage.getItem("role");
+
   console.log("reductStore.value is : ", reductStore.value);
   console.log("iS MENTOR cureent : ", { isMentor });
   console.log("iS MENTOR : ", { isMentor });
 
   const handleChange = (e) => {
     setCurrentMessage(e.target.value);
+    joinRoom();
     sendMessage();
   };
   const sendMessage = () => {
-    socket.emit("send_message", { message: currentMessage });
+    socket.emit("send_message", { message: currentMessage, room });
+  };
+  const joinRoom = () => {
+    if (room !== "") {
+      socket.emit("join_room", room);
+    }
   };
 
   useEffect(() => {
-    if (reductStore.value === "mentor") {
+    if (role === "mentor") {
       setIsMentor(true);
-    }
+    } else setIsMentor(false);
   }, []);
 
   useEffect(() => {

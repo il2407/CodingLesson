@@ -1,19 +1,34 @@
 import io from "socket.io-client";
 import { useState } from "react";
 import Chat from "./Chat";
+import axios from "axios";
+import uuid from "react-uuid";
 
 const socket = io.connect("http://localhost:5001");
+const BASE_URL = "http://localhost:5001/session/createsession";
 
 function TextSession() {
   const [username, setUsername] = useState("");
   const [room, setRoom] = useState("");
   const [showChat, setShowChat] = useState(false);
 
+  const createSession = async () => {
+    //generate uuid and pull username
+    const { data } = await axios.post(BASE_URL, {
+      uuid: uuid(),
+      user: "a",
+    });
+  };
   const joinRoom = () => {
     if (username !== "" && room !== "") {
       socket.emit("join_room", room);
       setShowChat(true);
     }
+  };
+
+  const handleOnClick = () => {
+    createSession();
+    joinRoom();
   };
 
   return (
@@ -35,7 +50,7 @@ function TextSession() {
               setRoom(event.target.value);
             }}
           />
-          <button onClick={joinRoom}>Join A Room</button>
+          <button onClick={handleOnClick}>Join A Room</button>
         </div>
       ) : (
         <Chat socket={socket} username={username} room={room} />
