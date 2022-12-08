@@ -2,7 +2,7 @@ import { Navigate, Outlet } from "react-router-dom";
 
 //Protected route to validate authentacion according to the user's role
 const PrivateRoutes = () => {
-  const role = localStorage.getItem("role");
+  const role = sessionStorage.getItem("role");
 
   let auth = { token: true };
 

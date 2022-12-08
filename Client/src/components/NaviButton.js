@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Fab } from "@mui/material";
-
+import { useEffect, useState } from "react";
 // Custom component that gets:
 // Name of the Button
 // Path to navigate to
@@ -8,14 +8,26 @@ import { Fab } from "@mui/material";
 
 function NaviButton({ name, path, type }) {
   let navigate = useNavigate();
-  const curr = `/${path}`;
+  const [currPath, setCurrPath] = useState(`/${path}`);
+  const [currName, setCurrName] = useState(name);
+
+  const updatePath = () => {
+    // setCurrName(currName.name);
+    if (currPath === "/textSession") setCurrPath("textSession/" + currName);
+    console.log("name is :", currName);
+    console.log("path is :", currPath);
+  };
+
+  useEffect(() => {
+    updatePath();
+  }, []);
 
   return (
     <>
       <Fab
         color="success"
         variant="extended"
-        onClick={(e) => navigate(curr)}
+        onClick={(e) => navigate(currPath)}
         type={type}
         sx={{ textTransform: "none" }}
       >

@@ -21,7 +21,7 @@ export default function App() {
           <Route element={<PrivateRoutes />}>
             <Route path="/codeBlock" element={<CodeBlock />} />
           </Route>
-          <Route path="/textSession" element={<TextSession />} />
+          <Route path="codeBlock/textSession/:id" element={<TextSession />} />
           <Route path="*" element={<NotFound />} />
         </Routes>{" "}
       </Box>

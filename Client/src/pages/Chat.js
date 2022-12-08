@@ -9,7 +9,7 @@ function Chat({ socket, room }) {
   const store = useStore();
   let auth = { token: true };
   const reductStore = store.getState().role;
-  const role = localStorage.getItem("role");
+  const role = sessionStorage.getItem("role");
 
   console.log("reductStore.value is : ", reductStore.value);
   console.log("iS MENTOR cureent : ", { isMentor });

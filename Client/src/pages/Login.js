@@ -26,9 +26,9 @@ export function Login() {
   const getUserRole = async (userEmail) => {
     const { data } = await axios.get(BASE_URL + "role/" + userEmail);
     if (data.users[0].role === "mentor") {
-      localStorage.setItem("role", "mentor");
+      sessionStorage.setItem("role", "mentor");
     } else {
-      localStorage.setItem("role", "student");
+      sessionStorage.setItem("role", "student");
     }
   };
   const loginUser = async (userEmail) => {

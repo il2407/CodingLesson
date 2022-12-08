@@ -1,5 +1,7 @@
 import io from "socket.io-client";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
+
 import Chat from "./Chat";
 import axios from "axios";
 import uuid from "react-uuid";
@@ -7,17 +9,21 @@ import uuid from "react-uuid";
 const socket = io.connect("http://localhost:5001");
 const BASE_URL = "http://localhost:5001/session/createsession";
 
-function TextSession() {
+function TextSession(props) {
   const [username, setUsername] = useState("");
   const [room, setRoom] = useState("");
   const [showChat, setShowChat] = useState(false);
+  let { id } = useParams();
+  const [userId, setuserId] = useState(id);
+  const role = sessionStorage.getItem("role");
 
   const createSession = async () => {
     //generate uuid and pull username
     const { data } = await axios.post(BASE_URL, {
       uuid: uuid(),
-      user: "a",
+      user: userId,
     });
+    console.log("user id is:", userId);
   };
   const joinRoom = () => {
     if (username !== "" && room !== "") {
