@@ -59,16 +59,21 @@ export function CodeBlock() {
   useEffect(() => {
     getAllcodeBlocks();
     getAllUsers();
-  }, [codeBlockDatabase, userDatabase]);
+  }, []);
 
   //Sending a POST request to submit a code block to database
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.post(BASE_CODEBLOCK_URL, {
-      title: title,
-      text: text,
-    });
+    axios
+      .post(BASE_CODEBLOCK_URL, {
+        title: title,
+        text: text,
+      })
+      .then(() => {
+        getAllcodeBlocks();
+        getAllUsers();
+      });
   };
 
   return (

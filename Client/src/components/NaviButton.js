@@ -14,8 +14,6 @@ function NaviButton({ name, path, type }) {
   const updatePath = () => {
     // setCurrName(currName.name);
     if (currPath === "/textSession") setCurrPath("textSession/" + currName);
-    console.log("name is :", currName);
-    console.log("path is :", currPath);
   };
 
   useEffect(() => {

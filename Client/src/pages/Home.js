@@ -14,9 +14,7 @@ export function Home() {
         left: "45%",
       }}
     >
-      <Typography variant="h4" gutterBottom="true">
-        Home
-      </Typography>
+      <Typography variant="h4">Home</Typography>
       <br></br>
       <div>
         {" "}
