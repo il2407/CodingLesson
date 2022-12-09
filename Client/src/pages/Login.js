@@ -2,8 +2,6 @@ import { React, useState } from "react";
 import { Form } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { changeToMentor, changeToStudent } from "../HomeSlice";
 import {
   FormGroup,
   FormLabel,
@@ -17,7 +15,7 @@ import {
 
 const BASE_URL = "http://localhost:5001/user/";
 
-export function Login() {
+export function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 

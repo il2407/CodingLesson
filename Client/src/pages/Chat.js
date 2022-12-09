@@ -1,19 +1,12 @@
 import React, { useEffect, useState } from "react";
 import CodeEditor from "@uiw/react-textarea-code-editor";
-import { useStore } from "react-redux";
 
 function Chat({ socket, room }) {
   const [currentMessage, setCurrentMessage] = useState("abc");
   const [isMentor, setIsMentor] = useState(false);
 
-  const store = useStore();
   let auth = { token: true };
-  const reductStore = store.getState().role;
   const role = sessionStorage.getItem("role");
-
-  console.log("reductStore.value is : ", reductStore.value);
-  console.log("iS MENTOR cureent : ", { isMentor });
-  console.log("iS MENTOR : ", { isMentor });
 
   const handleChange = (e) => {
     setCurrentMessage(e.target.value);

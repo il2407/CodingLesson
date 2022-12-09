@@ -10,15 +10,13 @@ const socket = io.connect("http://localhost:5001");
 const BASE_URL = "http://localhost:5001/session/createsession";
 
 function TextSession(props) {
-  const [username, setUsername] = useState("");
   const [showChat, setShowChat] = useState(false);
   let { id } = useParams();
   const [link, setLink] = useState(
     "http://localhost:3000/codeBlock/textSession/" + id
   );
 
-  const [userId, setuserId] = useState(id);
-  const role = sessionStorage.getItem("role");
+  const [userId, setUserId] = useState(id);
 
   const createSession = async () => {
     //generate uuid and pull username
@@ -44,7 +42,7 @@ function TextSession(props) {
 
   return (
     <div className="App">
-      <p>Link is: {link}</p>
+      <p>Sharable link is: {link}</p>
       {!showChat ? (
         <button onClick={handleOnClick}>Join A Room</button>
       ) : (
