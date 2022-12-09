@@ -11,9 +11,12 @@ const BASE_URL = "http://localhost:5001/session/createsession";
 
 function TextSession(props) {
   const [username, setUsername] = useState("");
-  const [room, setRoom] = useState("");
   const [showChat, setShowChat] = useState(false);
   let { id } = useParams();
+  const [link, setLink] = useState(
+    "http://localhost:3000/codeBlock/textSession/" + id
+  );
+
   const [userId, setuserId] = useState(id);
   const role = sessionStorage.getItem("role");
 
@@ -23,11 +26,13 @@ function TextSession(props) {
       uuid: uuid(),
       user: userId,
     });
-    console.log("user id is:", userId);
+    console.log("chat is:", showChat);
   };
   const joinRoom = () => {
-    if (username !== "" && room !== "") {
-      socket.emit("join_room", room);
+    console.log("room is:", userId);
+
+    if (userId !== "") {
+      socket.emit("join_room", userId);
       setShowChat(true);
     }
   };
@@ -39,27 +44,11 @@ function TextSession(props) {
 
   return (
     <div className="App">
+      <p>Link is: {link}</p>
       {!showChat ? (
-        <div className="joinChatContainer">
-          <h3>Join A Chat</h3>
-          <input
-            type="text"
-            placeholder="John..."
-            onChange={(event) => {
-              setUsername(event.target.value);
-            }}
-          />
-          <input
-            type="text"
-            placeholder="Room ID..."
-            onChange={(event) => {
-              setRoom(event.target.value);
-            }}
-          />
-          <button onClick={handleOnClick}>Join A Room</button>
-        </div>
+        <button onClick={handleOnClick}>Join A Room</button>
       ) : (
-        <Chat socket={socket} username={username} room={room} />
+        <Chat socket={socket} room={userId} />
       )}
     </div>
   );
