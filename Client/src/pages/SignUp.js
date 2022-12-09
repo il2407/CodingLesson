@@ -68,7 +68,7 @@ export function SignUp() {
         {/* role */}
         <FormGroup controlId="formBasicRole">
           <FormControl onChange={(e) => setRole(e.target.value)}>
-            <InputLabel htmlFor="my-input">Role</InputLabel>
+            <InputLabel htmlFor="my-input">Role - mentor or student</InputLabel>
             <Input id="my-input" aria-describedby="my-helper-text" />
             <FormHelperText id="my-helper-text"></FormHelperText>
           </FormControl>
