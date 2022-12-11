@@ -34,23 +34,9 @@ function Chat({ socket, room }) {
     });
   }, [socket]);
 
-  return isMentor ? (
+  return (
     <CodeEditor
-      readOnly
-      value={currentMessage}
-      language="js"
-      placeholder="Please enter JS code."
-      onChange={handleChange}
-      padding={15}
-      style={{
-        fontSize: 12,
-        backgroundColor: "#f5f5f5",
-        fontFamily:
-          "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
-      }}
-    />
-  ) : (
-    <CodeEditor
+      readOnly={isMentor}
       value={currentMessage}
       language="js"
       placeholder="Please enter JS code."

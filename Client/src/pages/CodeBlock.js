@@ -12,6 +12,7 @@ import {
   Input,
   FormHelperText,
 } from "@mui/material";
+import SignForm from "../components/SignForm";
 
 const BASE_URL = "http://localhost:5001/";
 const BASE_CODEBLOCK_URL = BASE_URL + "codeblocks";
@@ -84,39 +85,15 @@ export function CodeBlock() {
         <Grid container spacing={2}>
           <Grid item xs="auto" alignContent="baseline">
             <Item>
-              <Form onSubmit={(e) => handleSubmit(e)}>
-                {/* CodeBlock Title */}
-                <FormGroup controlId="formBasicTitle">
-                  <FormControl onChange={(e) => setTitle(e.target.value)}>
-                    {" "}
-                    <InputLabel htmlFor="my-input">Code Block Title</InputLabel>
-                    <Input id="my-input" aria-describedby="my-helper-text" />
-                    <FormHelperText id="my-helper-text"></FormHelperText>
-                  </FormControl>
-                </FormGroup>
-                <br></br>
-
-                {/* CodeBlock Code*/}
-                <Form.Group controlId="formBasicText">
-                  <FormControl onChange={(e) => setText(e.target.value)}>
-                    {" "}
-                    <InputLabel htmlFor="my-input">Code</InputLabel>
-                    <Input id="my-input" aria-describedby="my-helper-text" />
-                    <FormHelperText id="my-helper-text"></FormHelperText>
-                  </FormControl>
-                </Form.Group>
-
-                {/* submit button */}
-                <br></br>
-
-                <Button
-                  variant="success"
-                  type="submit"
-                  onClick={(e) => handleSubmit(e)}
-                >
-                  Submit
-                </Button>
-              </Form>
+              <SignForm
+                firstFunc={setTitle}
+                firstText="CodeBlock title"
+                secondFunc={setText}
+                secondText="CodeBlock content"
+                submitFunc={handleSubmit}
+                login={true}
+                buttonText="Insert"
+              />
             </Item>
           </Grid>
           <Grid item xs="auto">

@@ -1,17 +1,7 @@
 import { React, useState } from "react";
-import { Form } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import {
-  FormGroup,
-  FormLabel,
-  FormControl,
-  Fab,
-  InputLabel,
-  Input,
-  FormHelperText,
-  Grid,
-} from "@mui/material";
+import SignForm from "../components/SignForm";
 
 const BASE_URL = "http://localhost:5001/user/";
 
@@ -37,7 +27,12 @@ export function Login(props) {
       })
       .then((data) => {
         if (data.data.message === "Auth Successfull") {
-          navigate("/codeBlock");
+          sessionStorage.setItem("logged", true);
+          const role = sessionStorage.getItem("role");
+          if (role === "mentor") navigate("/codeBlock");
+          console.log("props is ", props.path);
+          if (props.path == undefined) navigate("/codeBlock");
+          else navigate(props.path);
         }
       });
   };
@@ -54,44 +49,15 @@ export function Login(props) {
     <div>
       <h1>Login Page</h1>
       <br></br>
-      <Grid width={200} right={40}>
-        <Form onSubmit={(e) => handleSubmit(e)}>
-          {/* email */}
-          <FormGroup controlId="formBasicEmail">
-            <FormControl onChange={(e) => setEmail(e.target.value)}>
-              <InputLabel htmlFor="my-input">Email address</InputLabel>
-              <Input id="my-input" aria-describedby="my-helper-text" />
-              <FormHelperText id="my-helper-text"></FormHelperText>
-            </FormControl>
-          </FormGroup>
-          <br></br>
-          {/* password */}
-          <FormGroup controlId="formBasicPassword">
-            <FormLabel></FormLabel>
-            <FormLabel></FormLabel>
-            <FormControl onChange={(e) => setPassword(e.target.value)}>
-              <InputLabel htmlFor="my-input">Password</InputLabel>
-              <Input
-                type="password"
-                id="my-input"
-                aria-describedby="my-helper-text"
-              />
-              <FormHelperText id="my-helper-text"></FormHelperText>
-            </FormControl>
-          </FormGroup>
-          <br></br>
-          {/* Login button */}
-          <Fab
-            color="success"
-            variant="primary"
-            type="submit"
-            onSubmit={(e) => handleSubmit(e)}
-            sx={{ textTransform: "none" }}
-          >
-            Login
-          </Fab>
-        </Form>
-      </Grid>
+      <SignForm
+        firstFunc={setEmail}
+        firstText="Email address"
+        secondFunc={setPassword}
+        secondText="Password"
+        submitFunc={handleSubmit}
+        login={true}
+        buttonText="Login"
+      />
     </div>
   );
 }

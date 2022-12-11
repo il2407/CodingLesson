@@ -1,10 +1,11 @@
 import io from "socket.io-client";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 
-import Chat from "./Chat";
+import Chat from "../components/Chat";
 import axios from "axios";
 import uuid from "react-uuid";
+import { Login } from "./Login";
 
 const socket = io.connect("http://localhost:5001");
 const BASE_URL = "http://localhost:5001/session/createsession";
@@ -16,21 +17,23 @@ function TextSession(props) {
     "http://localhost:3000/codeBlock/textSession/" + id
   );
 
-  const [userId, setUserId] = useState(id);
+  // const [userId, setUserId] = useState(id);
+  // const role = sessionStorage.getItem("role");
+  const logged = sessionStorage.getItem("logged");
+  console.log(logged);
 
   const createSession = async () => {
     //generate uuid and pull username
     const { data } = await axios.post(BASE_URL, {
       uuid: uuid(),
-      user: userId,
+      user: id,
     });
-    console.log("chat is:", showChat);
   };
-  const joinRoom = () => {
-    console.log("room is:", userId);
 
-    if (userId !== "") {
-      socket.emit("join_room", userId);
+  const joinRoom = () => {
+    console.log("joim room activated");
+    if (id !== "") {
+      socket.emit("join_room", id);
       setShowChat(true);
     }
   };
@@ -43,10 +46,19 @@ function TextSession(props) {
   return (
     <div className="App">
       <p>Sharable link is: {link}</p>
-      {!showChat ? (
-        <button onClick={handleOnClick}>Join A Room</button>
+      {!logged ? (
+        <Login path={"/codeBlock/textSession/" + id} />
       ) : (
-        <Chat socket={socket} room={userId} />
+        <div>
+          <br></br>
+          <p>Welcome to text session</p>
+        </div>
+      )}
+
+      {showChat ? (
+        <Chat socket={socket} room={id} />
+      ) : (
+        <button onClick={handleOnClick}>Join A Room</button>
       )}
     </div>
   );
