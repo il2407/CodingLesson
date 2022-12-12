@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import SignForm from "../components/SignForm";
 
-const BASE_URL = "http://localhost:5001/user/";
+const BASE_URL = process.env.REACT_APP_API_KEY + "/user/";
 
 export function Login(props) {
   const [email, setEmail] = useState("");
@@ -19,6 +19,7 @@ export function Login(props) {
       sessionStorage.setItem("role", "student");
     }
   };
+
   const loginUser = async (userEmail) => {
     axios
       .post(BASE_URL + "login", {
@@ -28,6 +29,7 @@ export function Login(props) {
       .then((data) => {
         if (data.data.message === "Auth Successfull") {
           sessionStorage.setItem("logged", true);
+          localStorage.setItem("token", "Bearer " + data.data.token);
           const role = sessionStorage.getItem("role");
           if (role === "mentor") navigate("/codeBlock");
           console.log("props is ", props.path);

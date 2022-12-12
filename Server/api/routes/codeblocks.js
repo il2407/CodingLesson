@@ -1,17 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-const check_auth = require("../middleware/check_auth");
+const checkAuth = require("../middleware/checkAuth");
 
 const codeBlocksController = require("../controllers/codeblock");
 
 // Get All
 // Method: GET
-router.get("/", codeBlocksController.codeblocks_get_all);
+router.get("/", checkAuth, codeBlocksController.codeblocks_get_all);
 
 // Create new
 // Method: POST
-router.post("/", codeBlocksController.codeblocks_create_codeblock);
+router.post("/", checkAuth, codeBlocksController.codeblocks_create_codeblock);
 
 // Get  By Id
 // Method: GET

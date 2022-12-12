@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import SignForm from "../components/SignForm";
 
-const BASE_URL = "http://localhost:5001/user/signup";
+const BASE_URL = process.env.REACT_APP_API_KEY + "/user/signup/";
 
 export function SignUp() {
   const [email, setEmail] = useState("");

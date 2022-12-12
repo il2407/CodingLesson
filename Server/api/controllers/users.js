@@ -98,6 +98,8 @@ exports.users_login = (req, res, next) => {
           });
         }
         if (result) {
+          console.log(process.env.JWT_KEY);
+
           const token = jwt.sign(
             {
               email: user[0].email,

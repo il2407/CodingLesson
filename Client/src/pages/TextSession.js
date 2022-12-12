@@ -7,25 +7,29 @@ import axios from "axios";
 import uuid from "react-uuid";
 import { Login } from "./Login";
 
-const socket = io.connect("http://localhost:5001");
-const BASE_URL = "http://localhost:5001/session/createsession";
+const BASE_URL = process.env.REACT_APP_API_KEY;
+const socket = io.connect(BASE_URL);
 
 function TextSession(props) {
   const [showChat, setShowChat] = useState(false);
   let { id } = useParams();
-  const [link, setLink] = useState(
-    "http://localhost:3000/codeBlock/textSession/" + id
-  );
+  const [link, setLink] = useState(process.env.REACT_APP_LINK_BASE + id);
 
   const logged = sessionStorage.getItem("logged");
   console.log(logged);
 
   const createSession = async () => {
     //generate uuid and pull username
-    const { data } = await axios.post(BASE_URL, {
-      uuid: uuid(),
-      user: id,
-    });
+    const { data } = await axios.post(
+      BASE_URL + "/session/createsession/",
+      {
+        uuid: uuid(),
+        user: id,
+      },
+      {
+        headers: { authorization: localStorage.getItem("token") },
+      }
+    );
   };
 
   const joinRoom = () => {

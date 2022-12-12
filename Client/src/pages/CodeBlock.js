@@ -7,7 +7,7 @@ import Paper from "@mui/material/Paper";
 
 import SignForm from "../components/SignForm";
 
-const BASE_URL = "http://localhost:5001/";
+const BASE_URL = process.env.REACT_APP_API_KEY + "/";
 const BASE_CODEBLOCK_URL = BASE_URL + "codeblocks";
 const BASE_USER_URL = BASE_URL + "user";
 
@@ -40,13 +40,18 @@ export function CodeBlock() {
   const [userDatabase, setUserDatabase] = useState();
 
   const getAllcodeBlocks = async () => {
-    const { data } = await axios.get(BASE_CODEBLOCK_URL);
+    console.log(localStorage.getItem("token"));
+    const { data } = await axios.get(BASE_CODEBLOCK_URL, {
+      headers: { authorization: localStorage.getItem("token") },
+    });
 
     setBlockDataBase(data);
   };
 
   const getAllUsers = async () => {
-    const { data } = await axios.get(BASE_USER_URL);
+    const { data } = await axios.get(BASE_USER_URL, {
+      headers: { authorization: localStorage.getItem("token") },
+    });
     setUserDatabase(data);
   };
 
@@ -60,10 +65,16 @@ export function CodeBlock() {
     e.preventDefault();
 
     axios
-      .post(BASE_CODEBLOCK_URL, {
-        title: title,
-        text: text,
-      })
+      .post(
+        BASE_CODEBLOCK_URL,
+        {
+          title: title,
+          text: text,
+        },
+        {
+          headers: { authorization: localStorage.getItem("token") },
+        }
+      )
       .then(() => {
         getAllcodeBlocks();
         getAllUsers();
