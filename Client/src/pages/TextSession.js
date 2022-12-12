@@ -1,5 +1,5 @@
 import io from "socket.io-client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navigate, useParams } from "react-router-dom";
 
 import Chat from "../components/Chat";
@@ -38,27 +38,29 @@ function TextSession(props) {
     }
   };
 
-  const handleOnClick = () => {
+  useEffect(() => {
     createSession();
     joinRoom();
-  };
+  }, []);
+
+  // const handleOnClick = () => {
+  //   createSession();
+  //   joinRoom();
+  // };
 
   return (
     <div className="App">
       <p>Sharable link is: {link}</p>
-      {!logged ? (
-        <Login path={"/codeBlock/textSession/" + id} />
-      ) : (
-        <div>
-          <br></br>
-          <p>Welcome to text session</p>
-        </div>
-      )}
 
-      {showChat ? (
+      {logged ? (
         <Chat socket={socket} room={id} />
       ) : (
-        <button onClick={handleOnClick}>Join A Room</button>
+        <>
+          First Login and then join the room
+          <br></br>
+          <Login path={"/codeBlock/textSession/" + id} />
+          <br></br>
+        </>
       )}
     </div>
   );

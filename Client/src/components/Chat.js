@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import CodeEditor from "@uiw/react-textarea-code-editor";
 
 function Chat({ socket, room }) {
-  const [currentMessage, setCurrentMessage] = useState("abc");
+  const [currentMessage, setCurrentMessage] = useState("");
   const [isMentor, setIsMentor] = useState(false);
 
   let auth = { token: true };
