@@ -9,15 +9,11 @@ const BASE_URL = "http://localhost:5001/user/signup";
 export function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [register, setRegister] = useState("");
   const [role, setRole] = useState("");
 
   let navigate = useNavigate();
 
-  //Sending a POST request to submit a user to database
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const signUpUser = async () => {
     axios
       .post(BASE_URL, {
         email: email,
@@ -25,12 +21,16 @@ export function SignUp() {
         role: role,
       })
       .then((data) => {
-        setRegister(data.data.message);
-
         if (data.data.message === "User added successfully") {
           navigate("/login");
         } else alert("User register failed");
       });
+  };
+
+  //Sending a POST request to submit a user to database
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    signUpUser();
   };
 
   return (

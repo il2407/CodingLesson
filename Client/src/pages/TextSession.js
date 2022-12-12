@@ -17,8 +17,6 @@ function TextSession(props) {
     "http://localhost:3000/codeBlock/textSession/" + id
   );
 
-  // const [userId, setUserId] = useState(id);
-  // const role = sessionStorage.getItem("role");
   const logged = sessionStorage.getItem("logged");
   console.log(logged);
 
@@ -42,11 +40,6 @@ function TextSession(props) {
     createSession();
     joinRoom();
   }, []);
-
-  // const handleOnClick = () => {
-  //   createSession();
-  //   joinRoom();
-  // };
 
   return (
     <div className="App">
