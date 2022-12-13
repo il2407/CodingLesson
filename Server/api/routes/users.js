@@ -20,7 +20,7 @@ router.post("/signup", usersController.users_add_new_user);
 // Method: POST
 router.post("/login", usersController.users_login);
 
-// Delete User by ID
+// Delete User by id
 // Method: DELETE
 router.delete("/:userId", usersController.users_delete);
 
