@@ -47,7 +47,8 @@ function TextSession(props) {
 
   return (
     <div className="App">
-      <p>Sharable link is: {link}</p>
+      <h4>Sharable link is: </h4>
+      <h5 style={{ color: "blue" }}>{link}</h5>
 
       {logged ? (
         <Chat socket={socket} room={id} />
